@@ -28,7 +28,19 @@ void waits(SharedResource& sharedRes)
 	std::cerr << "Waiting... \n";
 	while (sharedRes.counter != 1) 
 	{
-		sharedRes.cv.wait_for(lk,3s);
+
+		/*
+		
+		If a thread blocks on a std::condition_variable and 
+		receives a notification but the lock on the associated mutex has not yet been released, 
+		the thread will wait until the lock is released before continuing execution. 
+		If the lock is not released, the thread will remain blocked and will not proceed to the next line of code.
+		This is the basic behavior of condition variables and mutexes in concurrent programming. 
+		The thread waits for the lock to be released to ensure that the shared data protected by the mutex is in a 
+		consistent state before it continues execution.
+		
+		*/
+		sharedRes.cv.wait_for(lk,1s); 
 		std::cerr << "Thread ID: " << std::this_thread::get_id() << " wakes up every 3 seconds.\n";
 	}
 	std::cerr << "...finished waiting." << "counter: " << sharedRes.counter << std::endl;
@@ -51,7 +63,7 @@ void signals(SharedResource& sharedRes)
 		std::cerr << "Notifying again...\n";
 	
 	sharedRes.cv.notify_all();
-	std::this_thread::sleep_for(std::chrono::seconds(15));
+	std::this_thread::sleep_for(std::chrono::seconds(15)); //Adding for experimental purposes
 
 	}// The lk object will be unlocked after this scope ends.
 }
@@ -67,17 +79,3 @@ int main()
 	t2.join();
 }
 
-void main2()
-{
-	SharedResource sharedRes;
-
-	std::thread
-		t1(waits, std::ref(sharedRes)),
-		t2(waits, std::ref(sharedRes)),
-		t3(waits, std::ref(sharedRes)),
-		t4(signals, std::ref(sharedRes));
-	t1.join();
-	t2.join();
-	t3.join();
-	t4.join();
-}
