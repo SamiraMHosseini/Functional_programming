@@ -1,10 +1,10 @@
 # C++ Concurrent Programming
-Question: 
+# Question: 
 
 Is it clear what would happen if a thread blocked on a std::condition_variable receives a notification but the lock on the associated mutex is not yet released, 
 and the lock will be released 10 seconds later? Would the thread wait for the lock to be released or is the situation undefined?
 
-Answer:
+# Answer:
 It will continue to wait / wait_for until it can reacquire the lock.
 
 When std::condition_variable::wait and wait_for returns (for whatever reason), the lock is held again, so you don't have to worry about that.
