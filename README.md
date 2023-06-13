@@ -1,7 +1,7 @@
 # Functional Programming Concepts in C++
 
 # Description:
-Functional programming languages directly support programming with functions. This can include passing functions as arguments, returning them as results, and assigning them to variables. In your code, the filter function takes a function func as a parameter, which is an example of a higher-order function.
+Functional programming languages directly support programming with functions. This can include passing functions as arguments, returning them as results, and assigning them to variables. In this code, the filter function takes a function func as a parameter, which is an example of a higher-order function.
 This repository contains a basic example of some functional programming concepts implemented in C++. The aim is to illustrate how C++, while primarily an object-oriented language, also supports functional programming styles.
 
 # Details:
