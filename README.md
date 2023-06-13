@@ -1,20 +1,9 @@
-# C++ Concurrent Programming
-# Question: 
+# Functional Programming Concepts in C++
 
-Is it clear what would happen if a thread blocked on a std::condition_variable receives a notification but the lock on the associated mutex is not yet released, 
-and the lock will be released let's say 15 seconds later? Would the thread wait for the lock to be released or is the situation undefined?
+# Description:
+This repository contains a basic example of some functional programming concepts implemented in C++. The aim is to illustrate how C++, while primarily an object-oriented language, also supports functional programming styles.
 
-# Answer:
-It will continue to wait / wait_for until it can reacquire the lock.
+# Details:
+The main file demonstrates the use of higher-order functions, lambda expressions, and pure functions in C++. Specifically, it uses a filter function that accepts another function as its parameter and applies this function to each element in a vector of integers. The parameter function is defined as a lambda and checks whether a given integer is even. The filter function then uses this lambda to print all the even numbers from the vector.
 
-When std::condition_variable::wait and wait_for returns (for whatever reason), the lock is held again, so you don't have to worry about that.
-
-It can even return from wait without having gotten any notifications (spurious wake-ups) - but, no matter what, the lock is reacquired when the call returns.
-
-In other words, if a thread blocks on a std::condition_variable and receives a notification but the lock on the associated mutex has not yet been released, 
-the thread will wait until the lock is released before continuing execution. 
-If the lock is not released, the thread will remain blocked and will not proceed to the next line of code.
-This is the basic behavior of condition variables and mutexes in concurrent programming. 
-The thread waits for the lock to be released to ensure that the shared data protected by the mutex is in a 
-consistent state before it continues execution.
-		
+Although C++ is not a purely functional language, this repository demonstrates that functional programming styles can indeed be effectively implemented in C++. It's a clear example of the multi-paradigm nature of the language.
